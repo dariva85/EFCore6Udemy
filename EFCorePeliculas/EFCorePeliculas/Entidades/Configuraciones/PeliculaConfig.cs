@@ -14,7 +14,7 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 .IsRequired();
             builder.Property(prop => prop.FechaEstreno)
                 .HasColumnType("date");
-            builder.Property(prop => prop.PosterUrl)
+            builder.Property(prop => prop.PosterURL)
                 .HasMaxLength(500)
                 .IsUnicode(false);
         }

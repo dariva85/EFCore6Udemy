@@ -1,4 +1,5 @@
-﻿using EFCorePeliculas.Entidades;
+﻿using EFCorePeliculas.Controllers.DTOs;
+using EFCorePeliculas.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +17,11 @@ namespace EFCorePeliculas.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IEnumerable<ActorDTO>> Get()
         {
-            var actores = await context.Actores
-                .Select(a=> new {id = a.Id, Nombre = a.Nombre})
+            return await context.Actores
+                .Select(a=> new ActorDTO{id = a.Id, Nombre = a.Nombre})
                 .ToListAsync();
-            return Ok(actores);
         }
     }
 }

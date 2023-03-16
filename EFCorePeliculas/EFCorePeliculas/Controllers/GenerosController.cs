@@ -63,5 +63,15 @@ namespace EFCorePeliculas.Controllers
                 //.OrderByDescending(g => g.Nombre)
                 .ToListAsync();
         }
+
+        [HttpGet("paginacion")]
+        public async Task<IEnumerable<Genero>> GetPaginacion(int pagina = 1)
+        {
+            var cantidadRegistorPorPagina = 2;
+            var generos = await context.Generos
+                .Skip((pagina -1) * cantidadRegistorPorPagina)
+                .Take(cantidadRegistorPorPagina).ToListAsync();
+            return generos;
+        }
     }
 }

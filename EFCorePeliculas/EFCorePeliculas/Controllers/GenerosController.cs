@@ -44,5 +44,23 @@ namespace EFCorePeliculas.Controllers
             }
             return genero;
         }
+
+        [HttpGet("filtrar")]
+        public async Task<IEnumerable<Genero>> Filtrar()
+        {
+            return await context.Generos.Where(g =>
+            g.Nombre.StartsWith("C") || g.Nombre.StartsWith("A")
+            ).ToListAsync();
+
+        }
+
+        [HttpGet("filtrarNombre")]
+        public async Task<IEnumerable<Genero>> Filtrar(string nombre)
+        {
+            return await context.Generos.Where(g =>
+            g.Nombre.Contains(nombre)
+            ).ToListAsync();
+
+        }
     }
 }

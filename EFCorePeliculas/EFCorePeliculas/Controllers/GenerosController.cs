@@ -18,7 +18,7 @@ namespace EFCorePeliculas.Controllers
         [HttpGet]
         public async Task<IEnumerable<Genero>> Get()
         {
-            return await context.Generos.ToListAsync();
+            return await context.Generos.AsNoTracking().ToListAsync();
         }
     }
 }

@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     { options.UseSqlServer(connectionString, sqlServer => sqlServer.UseNetTopologySuite());
         options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     });
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

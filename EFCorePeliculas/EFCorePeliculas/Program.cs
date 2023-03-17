@@ -5,13 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    { options.UseSqlServer(connectionString, sqlServer => sqlServer.UseNetTopologySuite());
+    {
+        options.UseSqlServer(connectionString, sqlServer => sqlServer.UseNetTopologySuite());
         options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     });
 builder.Services.AddAutoMapper(typeof(Program));

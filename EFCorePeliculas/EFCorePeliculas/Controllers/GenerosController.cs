@@ -21,18 +21,7 @@ namespace EFCorePeliculas.Controllers
             return await context.Generos.OrderBy(g => g.Nombre).ToListAsync();
         }
 
-        [HttpGet("primer")]
-        public async Task<ActionResult<Genero>> Primer()
-        {
-            var genero = await context.Generos.FirstOrDefaultAsync(g => g.Nombre.StartsWith("z"));
-
-            if (genero == null)
-            {
-                return NotFound();
-            }
-            return genero;
-        }
-
+        
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genero>> Primer(int id)
         {
@@ -45,33 +34,16 @@ namespace EFCorePeliculas.Controllers
             return genero;
         }
 
-        [HttpGet("filtrar")]
-        public async Task<IEnumerable<Genero>> Filtrar()
+        [HttpPost]
+        public async Task<ActionResult> Post(Genero genero)
         {
-            return await context.Generos.Where(g =>
-            g.Nombre.StartsWith("C") || g.Nombre.StartsWith("A")
-            ).ToListAsync();
-
+            var status1 = context.Entry(genero).State;
+            context.Add(genero);
+            var status2 = context.Entry(genero).State;
+            await context.SaveChangesAsync();
+            var status3 = context.Entry(genero).State;
+            return Ok();
         }
-
-        [HttpGet("filtrarNombre")]
-        public async Task<IEnumerable<Genero>> Filtrar(string nombre)
-        {
-            return await context.Generos
-                .Where(g => g.Nombre.Contains(nombre))
-                .OrderBy(g => g.Nombre)
-                //.OrderByDescending(g => g.Nombre)
-                .ToListAsync();
-        }
-
-        [HttpGet("paginacion")]
-        public async Task<IEnumerable<Genero>> GetPaginacion(int pagina = 1)
-        {
-            var cantidadRegistorPorPagina = 2;
-            var generos = await context.Generos
-                .Skip((pagina -1) * cantidadRegistorPorPagina)
-                .Take(cantidadRegistorPorPagina).ToListAsync();
-            return generos;
-        }
+        
     }
 }

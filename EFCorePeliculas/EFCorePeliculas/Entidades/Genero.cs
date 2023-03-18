@@ -14,6 +14,6 @@ namespace EFCorePeliculas.Entidades
         //[Column("NombreGenero")]
         //[Required]
         public string Nombre { get; set; }
-        public HashSet<Pelicula> Peliculas { get; set; }
+        public virtual HashSet<Pelicula> Peliculas { get; set; }
     }   
 }

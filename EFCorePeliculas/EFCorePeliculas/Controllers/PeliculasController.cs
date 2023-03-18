@@ -91,12 +91,29 @@ namespace EFCorePeliculas.Controllers
 
             var cantidadGeneros = await context.Entry(pelicula).Collection(p => p.Generos).Query().CountAsync();
 
-            if(pelicula is null)
+            if (pelicula is null)
             {
                 return NotFound();
             }
 
             var peliculaDTO = mapper.Map<PeliculaDTO>(pelicula);
+
+            return Ok(peliculaDTO);
+        }
+
+        [HttpGet("lazyloading/{id:int}")]
+        public async Task<ActionResult<PeliculaDTO>> GetLazyLoading(int id)
+        {
+            var pelicula = await context.Peliculas.AsTracking().FirstOrDefaultAsync(p => p.Id == id);
+
+            if (pelicula is null)
+            {
+                return NotFound();
+            }
+
+            var peliculaDTO = mapper.Map<PeliculaDTO>(pelicula);
+
+            peliculaDTO.Cines = peliculaDTO.Cines.DistinctBy(x => x.Id).ToList();
 
             return Ok(peliculaDTO);
         }

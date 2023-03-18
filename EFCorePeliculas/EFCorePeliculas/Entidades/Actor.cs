@@ -9,6 +9,6 @@ namespace EFCorePeliculas.Entidades
         public string Biografia { get; set; }
         //[Column(TypeName = "Date")]
         public DateTime? FechaNacimiento { get; set; }
-        public HashSet<PeliculaActor> PeliculasActores { get; set; }
+        public virtual HashSet<PeliculaActor> PeliculasActores { get; set; }
     }
 }

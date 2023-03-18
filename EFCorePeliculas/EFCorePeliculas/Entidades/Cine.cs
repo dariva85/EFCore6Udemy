@@ -9,7 +9,7 @@ namespace EFCorePeliculas.Entidades
         public string Nombre { get; set; }
         //[Precision(precision:9, scale:2)]
         public Point Ubicacion { get; set; }
-        public virtual CineOferta CineOferta { get; set; }
-        public virtual HashSet<SalaDeCine> SalasDeCine { get; set; }
+        public CineOferta CineOferta { get; set; }
+        public HashSet<SalaDeCine> SalasDeCine { get; set; }
     }
 }

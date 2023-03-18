@@ -102,20 +102,20 @@ namespace EFCorePeliculas.Controllers
         }
 
         [HttpGet("lazyloading/{id:int}")]
-        public async Task<ActionResult<PeliculaDTO>> GetLazyLoading(int id)
+        public async Task<ActionResult<List<PeliculaDTO>>> GetLazyLoading(int id)
         {
-            var pelicula = await context.Peliculas.AsTracking().FirstOrDefaultAsync(p => p.Id == id);
+            var peliculas = await context.Peliculas.AsTracking().ToListAsync();
 
-            if (pelicula is null)
+            foreach (var pelicula in peliculas)
             {
-                return NotFound();
+                //cargar los generos de la pelicula
+                //problema n + 1
+                pelicula.Generos.ToList();
             }
 
-            var peliculaDTO = mapper.Map<PeliculaDTO>(pelicula);
+            var peliculaDTOs = mapper.Map<PeliculaDTO>(peliculas);
 
-            peliculaDTO.Cines = peliculaDTO.Cines.DistinctBy(x => x.Id).ToList();
-
-            return Ok(peliculaDTO);
+            return Ok(peliculaDTOs);
         }
     }
 }

@@ -81,5 +81,24 @@ namespace EFCorePeliculas.Controllers
 
             return Ok(pelicula);
         }
+
+        [HttpGet("cargadoexplicito/{id:int}")]
+        public async Task<ActionResult> GetExplicito(int id)
+        {
+            var pelicula = await context.Peliculas.AsTracking().FirstOrDefaultAsync(p => p.Id == id);
+
+            await context.Entry(pelicula).Collection(p => p.Generos).LoadAsync();
+
+            var cantidadGeneros = await context.Entry(pelicula).Collection(p => p.Generos).Query().CountAsync();
+
+            if(pelicula is null)
+            {
+                return NotFound();
+            }
+
+            var peliculaDTO = mapper.Map<PeliculaDTO>(pelicula);
+
+            return Ok(peliculaDTO);
+        }
     }
 }

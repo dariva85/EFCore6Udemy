@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using EFCorePeliculas.Controllers.DTOs;
 using EFCorePeliculas.Entidades;
+using EFCorePeliculas.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,6 +57,27 @@ namespace EFCorePeliculas.Controllers
             }
 
             pelicula.Cines = pelicula.Cines.DistinctBy(c => c.Id).ToList();
+
+            return Ok(pelicula);
+        }
+
+        [HttpGet("cargadoselectivo/{id:int}")]
+        public async Task<ActionResult> GetSelectivo(int id)
+        {
+            var pelicula = await context.Peliculas.Select(p =>
+            new
+            {
+                Id = p.Id,
+                Titulo = p.Titulo,
+                Generos = p.Generos.OrderByDescending(g => g.Nombre).Select(g => g.Nombre).ToList(),
+                CantidadActores = p.PeliculasActores.Count(),
+                Cines = p.SalasDeCine.Select(s => s.CineId).Distinct().Count()
+            }).FirstOrDefaultAsync(p => p.Id == id);
+
+            if (pelicula is null)
+            {
+                return NotFound();
+            }
 
             return Ok(pelicula);
         }

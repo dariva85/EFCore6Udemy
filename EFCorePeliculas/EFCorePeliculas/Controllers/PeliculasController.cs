@@ -4,7 +4,9 @@ using EFCorePeliculas.Controllers.DTOs;
 using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Migrations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace EFCorePeliculas.Controllers
 {
@@ -116,6 +118,34 @@ namespace EFCorePeliculas.Controllers
             var peliculaDTOs = mapper.Map<PeliculaDTO>(peliculas);
 
             return Ok(peliculaDTOs);
+        }
+
+        [HttpGet("agrupadasporestreno")]
+        public async Task<ActionResult> GetAgrupadasPorCartelera()
+        {
+            var peliculasAgrupadas = await context.Peliculas.GroupBy(p => p.EnCartelera)
+                .Select(p => new
+                {
+                    EnCartelera = p.Key,
+                    Conteo = p.Count(),
+                    Peliculas = p.ToList()
+                }).ToListAsync();
+
+            return Ok(peliculasAgrupadas);
+        }
+
+        [HttpGet("agrupadasporcantidaddegeneros")]
+        public async Task<ActionResult> GetAgrupadasPorCantidadDeGeneros()
+        {
+            var peliculasAgrupadas = await context.Peliculas.GroupBy(p => p.Generos.Count())
+                .Select(p => new
+                {
+                    Conteo = p.Key,
+                    Titulos = p.Select(x=>x.Titulo),
+                    Generos = p.Select(p=>p.Generos).SelectMany(gen => gen).Select(gen=> gen.Nombre).Distinct()
+                }).ToListAsync();
+
+            return Ok(peliculasAgrupadas);
         }
     }
 }

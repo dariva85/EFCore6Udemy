@@ -34,10 +34,10 @@ namespace EFCorePeliculas.Controllers
 
             var miUbicacion = geometryFactory.CreatePoint(new NetTopologySuite.Geometries.Coordinate(longitud, latitud));
             var distanciaMaximaEnMetros = 2000;
-            
+
             var cines = await context.Cines
                 .OrderBy(c => c.Ubicacion.Distance(miUbicacion))
-                .Where(c=>c.Ubicacion.IsWithinDistance(miUbicacion, distanciaMaximaEnMetros))
+                .Where(c => c.Ubicacion.IsWithinDistance(miUbicacion, distanciaMaximaEnMetros))
                 .Select(c => new
                 {
                     Nombre = c.Nombre,
@@ -77,6 +77,16 @@ namespace EFCorePeliculas.Controllers
                     }
                 }
             };
+            context.Add(cine);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+
+        [HttpPost("conDTO")]
+        public async Task<ActionResult> Post(CineCreacionDTO cineCreacionDTO)
+        {
+            var cine = mapper.Map<Cine>(cineCreacionDTO);
             context.Add(cine);
             await context.SaveChangesAsync();
             return Ok();

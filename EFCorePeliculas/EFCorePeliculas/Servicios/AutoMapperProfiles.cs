@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EFCorePeliculas.Controllers;
 using EFCorePeliculas.Controllers.DTOs;
 using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Migrations;
@@ -33,6 +34,12 @@ namespace EFCorePeliculas.Servicios
                 .ForMember(dto => dto.Ubicacion, ent => ent.MapFrom(campo => GeometryFactory.CreatePoint(new Coordinate(campo.Longitud, campo.Latitud))));
             CreateMap<SalaDeCineCreacionDTO, SalaDeCine>();
             CreateMap<CineOfertaCreacionDTO, CineOferta>();
+
+            CreateMap<PeliculaCreacionDTO, Pelicula>()
+                .ForMember(dto => dto.Generos, ent => ent.MapFrom(campo => campo.Generos.Select(id => new Genero() { Identificador = id })))
+                .ForMember(dto => dto.SalasDeCine, ent => ent.MapFrom(campo => campo.SalasDeCine.Select(id => new SalaDeCine() { Id = id })));
+                
+            CreateMap<PeliculaActorCreacionDTO, PeliculaActor>();
         }
     }
 }

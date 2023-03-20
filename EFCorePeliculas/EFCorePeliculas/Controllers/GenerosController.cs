@@ -6,7 +6,7 @@ namespace EFCorePeliculas.Controllers
 {
     [ApiController]
     [Route("api/generos")]
-    public class GenerosController: ControllerBase
+    public class GenerosController : ControllerBase
     {
         private readonly ApplicationDbContext context;
 
@@ -21,7 +21,7 @@ namespace EFCorePeliculas.Controllers
             return await context.Generos.OrderBy(g => g.Nombre).ToListAsync();
         }
 
-        
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genero>> Primer(int id)
         {
@@ -52,6 +52,22 @@ namespace EFCorePeliculas.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
-        
+
+        [HttpPut]
+        public async Task<ActionResult> Agregar2(int id)
+        {
+            var genero = await context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Identificador == id);
+
+            if (genero is null) 
+            {
+                return NotFound();
+            }
+
+            genero.Nombre += " 2";
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 }

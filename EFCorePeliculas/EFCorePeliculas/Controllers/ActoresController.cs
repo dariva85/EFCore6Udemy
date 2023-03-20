@@ -9,7 +9,7 @@ namespace EFCorePeliculas.Controllers
 {
     [ApiController]
     [Route("api/actores")]
-    public class ActoresController:ControllerBase
+    public class ActoresController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
@@ -26,6 +26,15 @@ namespace EFCorePeliculas.Controllers
             return await context.Actores
                 .ProjectTo<ActorDTO>(mapper.ConfigurationProvider)
                 .ToListAsync();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(ActorCreacionDTO actorCreacionDTO)
+        {
+            var actor = mapper.Map<Actor>(actorCreacionDTO);
+            context.Actores.Add(actor);
+            await context.SaveChangesAsync();
+            return Ok(actor);
         }
     }
 }

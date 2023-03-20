@@ -180,16 +180,16 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 2,
                             CineId = 4,
-                            FechaFin = new DateTime(2023, 3, 21, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 3, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 15m
                         },
                         new
                         {
                             Id = 1,
                             CineId = 1,
-                            FechaFin = new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 3, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 10m
                         });
                 });
@@ -201,6 +201,9 @@ namespace EFCorePeliculas.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Identificador"));
+
+                    b.Property<bool>("EstaBorrado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -215,26 +218,31 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Identificador = 1,
+                            EstaBorrado = false,
                             Nombre = "Acción"
                         },
                         new
                         {
                             Identificador = 2,
+                            EstaBorrado = false,
                             Nombre = "Animación"
                         },
                         new
                         {
                             Identificador = 3,
+                            EstaBorrado = false,
                             Nombre = "Comedia"
                         },
                         new
                         {
                             Identificador = 4,
+                            EstaBorrado = false,
                             Nombre = "Ciencia ficción"
                         },
                         new
                         {
                             Identificador = 5,
+                            EstaBorrado = false,
                             Nombre = "Drama"
                         });
                 });

@@ -18,7 +18,7 @@ namespace EFCorePeliculas.Controllers
         [HttpGet]
         public async Task<IEnumerable<Genero>> Get()
         {
-            return await context.Generos.OrderBy(g => g.Nombre).ToListAsync();
+            return await context.Generos.Where(g => !g.EstaBorrado).OrderBy(g => g.Nombre).ToListAsync();
         }
 
 
@@ -58,7 +58,7 @@ namespace EFCorePeliculas.Controllers
         {
             var genero = await context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Identificador == id);
 
-            if (genero is null) 
+            if (genero is null)
             {
                 return NotFound();
             }
@@ -74,7 +74,7 @@ namespace EFCorePeliculas.Controllers
         {
             var genero = context.Generos.FirstOrDefault(g => g.Identificador == id);
 
-            if(genero is null)
+            if (genero is null)
             {
                 return NotFound();
             }
@@ -84,5 +84,20 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
+
+        [HttpDelete("softdelete/{id:int}")]
+        public async Task<ActionResult> SoftDelete(int id)
+        {
+            var genero = await context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Identificador == id);
+
+            if (genero is null)
+            {
+                return NotFound();
+            }
+
+            genero.EstaBorrado = true;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

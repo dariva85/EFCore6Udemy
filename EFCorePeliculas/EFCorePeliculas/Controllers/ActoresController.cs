@@ -50,7 +50,25 @@ namespace EFCorePeliculas.Controllers
             actor = mapper.Map(actorCreacionDTO, actor);
             await context.SaveChangesAsync();
 
-            return Ok(actor);
+            return Ok();
+        }
+
+        [HttpPut("desconectado/{id:int}")]
+        public async Task<ActionResult> PutDesconectado(ActorCreacionDTO actorCreacionDTO, int id)
+        {
+            var existeActor = await context.Actores.AnyAsync(a => a.Id == id);
+
+            if (!existeActor)
+            {
+                return NotFound();
+            }
+
+            var actor = mapper.Map<Actor>(actorCreacionDTO);
+            actor.Id = id;
+
+            context.Update(actor);
+            await context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

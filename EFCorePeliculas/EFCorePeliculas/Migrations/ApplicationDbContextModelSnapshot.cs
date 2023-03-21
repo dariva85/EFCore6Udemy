@@ -180,16 +180,16 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 2,
                             CineId = 4,
-                            FechaFin = new DateTime(2023, 3, 25, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 3, 26, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 15m
                         },
                         new
                         {
                             Id = 1,
                             CineId = 1,
-                            FechaFin = new DateTime(2023, 3, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 3, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 10m
                         });
                 });
@@ -245,6 +245,20 @@ namespace EFCorePeliculas.Migrations
                             EstaBorrado = false,
                             Nombre = "Drama"
                         });
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Log", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Mensaje")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Pelicula", b =>

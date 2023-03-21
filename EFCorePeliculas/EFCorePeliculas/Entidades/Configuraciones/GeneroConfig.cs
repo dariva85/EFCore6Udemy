@@ -14,6 +14,7 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 .IsRequired();
             //  .HasColumnName("NombreGenero");
             //builder.Entity<Genero>().ToTable(name: "TablaGenero", schema: "Peliculas");
+            builder.HasQueryFilter(g => !g.EstaBorrado);
 
         }
     }

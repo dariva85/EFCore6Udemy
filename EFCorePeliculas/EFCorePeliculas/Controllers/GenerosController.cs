@@ -18,7 +18,7 @@ namespace EFCorePeliculas.Controllers
         [HttpGet]
         public async Task<IEnumerable<Genero>> Get()
         {
-            return await context.Generos.Where(g => !g.EstaBorrado).OrderBy(g => g.Nombre).ToListAsync();
+            return await context.Generos.OrderBy(g => g.Nombre).ToListAsync();
         }
 
 
@@ -96,6 +96,22 @@ namespace EFCorePeliculas.Controllers
             }
 
             genero.EstaBorrado = true;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+
+        [HttpPost("restaurar/{id:int}")]
+        public async Task<ActionResult> Restaurar(int id)
+        {
+            var genero = await context.Generos.AsTracking().IgnoreQueryFilters().FirstOrDefaultAsync(g => g.Identificador == id);
+
+            if (genero is null)
+            {
+                return NotFound();
+            }
+
+            genero.EstaBorrado = false;
             await context.SaveChangesAsync();
             return Ok();
         }

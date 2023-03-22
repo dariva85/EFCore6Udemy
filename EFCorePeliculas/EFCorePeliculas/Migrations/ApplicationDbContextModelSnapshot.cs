@@ -423,10 +423,11 @@ namespace EFCorePeliculas.Migrations
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
 
-                    b.Property<int>("TipoSalaDeCine")
+                    b.Property<string>("TipoSalaDeCine")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("DosDimensiones");
 
                     b.HasKey("Id");
 
@@ -440,56 +441,56 @@ namespace EFCorePeliculas.Migrations
                             Id = 5,
                             CineId = 3,
                             Precio = 250m,
-                            TipoSalaDeCine = 1
+                            TipoSalaDeCine = "DosDimensiones"
                         },
                         new
                         {
                             Id = 6,
                             CineId = 3,
                             Precio = 330m,
-                            TipoSalaDeCine = 2
+                            TipoSalaDeCine = "TresDimensiones"
                         },
                         new
                         {
                             Id = 7,
                             CineId = 3,
                             Precio = 450m,
-                            TipoSalaDeCine = 3
+                            TipoSalaDeCine = "CXC"
                         },
                         new
                         {
                             Id = 8,
                             CineId = 4,
                             Precio = 250m,
-                            TipoSalaDeCine = 1
+                            TipoSalaDeCine = "DosDimensiones"
                         },
                         new
                         {
                             Id = 1,
                             CineId = 1,
                             Precio = 220m,
-                            TipoSalaDeCine = 1
+                            TipoSalaDeCine = "DosDimensiones"
                         },
                         new
                         {
                             Id = 2,
                             CineId = 1,
                             Precio = 320m,
-                            TipoSalaDeCine = 2
+                            TipoSalaDeCine = "TresDimensiones"
                         },
                         new
                         {
                             Id = 3,
                             CineId = 2,
                             Precio = 200m,
-                            TipoSalaDeCine = 1
+                            TipoSalaDeCine = "DosDimensiones"
                         },
                         new
                         {
                             Id = 4,
                             CineId = 2,
                             Precio = 290m,
-                            TipoSalaDeCine = 2
+                            TipoSalaDeCine = "TresDimensiones"
                         });
                 });
 

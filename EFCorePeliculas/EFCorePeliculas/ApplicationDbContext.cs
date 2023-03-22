@@ -30,7 +30,7 @@ namespace EFCorePeliculas
             
             //modelBuilder.Entity<Log>().Property(l => l.Id).ValueGeneratedNever();
 
-            modelBuilder.Ignore<Direccion>();
+            //modelBuilder.Ignore<Direccion>();
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             SeedingModuloConsulta.Seed(modelBuilder);

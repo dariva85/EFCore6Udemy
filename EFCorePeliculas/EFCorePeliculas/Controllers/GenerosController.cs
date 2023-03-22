@@ -41,11 +41,16 @@ namespace EFCorePeliculas.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(Genero genero)
         {
-            var status1 = context.Entry(genero).State;
+            var existeGenero = await context.Generos.AnyAsync(g => g.Nombre == genero.Nombre);
+            
+            if(existeGenero)
+            {
+                return BadRequest("Ya existe el genero");
+            }
+            
             context.Add(genero);
-            var status2 = context.Entry(genero).State;
             await context.SaveChangesAsync();
-            var status3 = context.Entry(genero).State;
+            
             return Ok();
         }
 

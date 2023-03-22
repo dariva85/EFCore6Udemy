@@ -212,6 +212,9 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Identificador");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("Generos");
 
                     b.HasData(

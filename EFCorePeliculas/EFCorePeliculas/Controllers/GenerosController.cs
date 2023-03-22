@@ -45,7 +45,7 @@ namespace EFCorePeliculas.Controllers
             
             if(existeGenero)
             {
-                return BadRequest("Ya existe el genero");
+                return BadRequest("Ya existe un genero con el nombre: " + genero.Nombre);
             }
             
             context.Add(genero);

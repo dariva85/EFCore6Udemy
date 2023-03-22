@@ -1,0 +1,11 @@
+﻿using Microsoft.Identity.Client;
+
+namespace EFCorePeliculas.Entidades
+{
+    public class Direccion
+    {
+        public string Calle { get; set; }
+        public string Provincia { get; set; }
+        public string Pais { get; set; }
+    }
+}

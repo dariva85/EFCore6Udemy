@@ -419,6 +419,10 @@ namespace EFCorePeliculas.Migrations
                     b.Property<int>("CineId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Moneda")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Precio")
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
@@ -440,6 +444,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 5,
                             CineId = 3,
+                            Moneda = "",
                             Precio = 250m,
                             TipoSalaDeCine = "DosDimensiones"
                         },
@@ -447,6 +452,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 6,
                             CineId = 3,
+                            Moneda = "",
                             Precio = 330m,
                             TipoSalaDeCine = "TresDimensiones"
                         },
@@ -454,6 +460,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 7,
                             CineId = 3,
+                            Moneda = "",
                             Precio = 450m,
                             TipoSalaDeCine = "CXC"
                         },
@@ -461,6 +468,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 8,
                             CineId = 4,
+                            Moneda = "",
                             Precio = 250m,
                             TipoSalaDeCine = "DosDimensiones"
                         },
@@ -468,6 +476,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 1,
                             CineId = 1,
+                            Moneda = "",
                             Precio = 220m,
                             TipoSalaDeCine = "DosDimensiones"
                         },
@@ -475,6 +484,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 2,
                             CineId = 1,
+                            Moneda = "",
                             Precio = 320m,
                             TipoSalaDeCine = "TresDimensiones"
                         },
@@ -482,6 +492,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 3,
                             CineId = 2,
+                            Moneda = "",
                             Precio = 200m,
                             TipoSalaDeCine = "DosDimensiones"
                         },
@@ -489,6 +500,7 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 4,
                             CineId = 2,
+                            Moneda = "",
                             Precio = 290m,
                             TipoSalaDeCine = "TresDimensiones"
                         });

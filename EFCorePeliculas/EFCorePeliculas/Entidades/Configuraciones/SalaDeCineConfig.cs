@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCorePeliculas.Entidades.Configuraciones.Conversiones;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 
@@ -14,6 +15,8 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 //.HasDefaultValueSql("GETDATE()");
                 .HasDefaultValue(TipoSalaDeCine.DosDimensiones)
                 .HasConversion<string>();
+
+            builder.Property(sdc => sdc.Moneda).HasConversion<MonedaSimboloConverter>();
         }
     }
 }

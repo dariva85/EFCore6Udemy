@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EFCorePeliculas.Entidades
 {
     //[Table("TablaGeneros", Schema ="peliculas")]
-    [Index(nameof(Nombre), IsUnique = true)]
+    //[Index(nameof(Nombre), IsUnique = true)]
     public class Genero
     {
         //[Key]

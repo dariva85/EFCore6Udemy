@@ -213,7 +213,8 @@ namespace EFCorePeliculas.Migrations
                     b.HasKey("Identificador");
 
                     b.HasIndex("Nombre")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("EstaBorrado = 'false'");
 
                     b.ToTable("Generos");
 

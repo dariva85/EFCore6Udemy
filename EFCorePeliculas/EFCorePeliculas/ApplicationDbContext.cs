@@ -37,6 +37,7 @@ namespace EFCorePeliculas
             SeedingModuloConsulta.Seed(modelBuilder);
 
             modelBuilder.Entity<CineSinUbicacion>().HasNoKey().ToSqlQuery("Select Id, Nombre From Cines").ToView(null);
+            modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToView("PeliculasConConteos");
 
         }
         public DbSet<Genero> Generos { get; set; }

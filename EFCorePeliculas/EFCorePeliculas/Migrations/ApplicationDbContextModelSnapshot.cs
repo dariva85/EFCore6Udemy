@@ -37,6 +37,11 @@ namespace EFCorePeliculas.Migrations
                     b.Property<DateTime?>("FechaNacimiento")
                         .HasColumnType("date");
 
+                    b.Property<string>("FotoURL")
+                        .HasMaxLength(500)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(500)");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(150)

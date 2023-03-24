@@ -39,5 +39,7 @@ namespace EFCorePeliculas.Entidades
         }
         [NotMapped]
         public Direccion Direccion { get; set; }
+
+        public string FotoURL { get; set; }
     }
 }

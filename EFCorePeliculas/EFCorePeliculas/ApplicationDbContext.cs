@@ -37,7 +37,20 @@ namespace EFCorePeliculas
             SeedingModuloConsulta.Seed(modelBuilder);
 
             modelBuilder.Entity<CineSinUbicacion>().HasNoKey().ToSqlQuery("Select Id, Nombre From Cines").ToView(null);
+
             modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToView("PeliculasConConteos");
+
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entity.GetProperties())
+                {
+                    if(property.ClrType == typeof(string) && property.Name.Contains("URL", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        property.SetIsUnicode(false);
+                        property.SetMaxLength(500);
+                    }
+                }
+            }
 
         }
         public DbSet<Genero> Generos { get; set; }
@@ -48,6 +61,6 @@ namespace EFCorePeliculas
         public DbSet<SalaDeCine> SalasDeCine { get; set; }
         public DbSet<PeliculaActor> PeliculasActores { get; set; }
         public DbSet<Log> Logs { get; set; }
-        public DbSet<CineSinUbicacion> CinesSinUbicacion {get; set;}
-}
+        public DbSet<CineSinUbicacion> CinesSinUbicacion { get; set; }
+    }
 }

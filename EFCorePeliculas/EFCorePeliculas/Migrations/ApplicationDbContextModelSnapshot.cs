@@ -275,6 +275,62 @@ namespace EFCorePeliculas.Migrations
                     b.ToTable("Logs");
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Mensaje", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Contenido")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmisorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceptorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmisorId");
+
+                    b.HasIndex("ReceptorId");
+
+                    b.ToTable("Mensajes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Contenido = "Hola, Claudia",
+                            EmisorId = 1,
+                            ReceptorId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Contenido = "Hola, Felipe, ¿Cómo te va?",
+                            EmisorId = 2,
+                            ReceptorId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Contenido = "Todo bien, ¿y tu?",
+                            EmisorId = 1,
+                            ReceptorId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Contenido = "Muy bien :)",
+                            EmisorId = 2,
+                            ReceptorId = 1
+                        });
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.Pelicula", b =>
                 {
                     b.Property<int>("Id")
@@ -416,6 +472,34 @@ namespace EFCorePeliculas.Migrations
                             ActorId = 8,
                             Orden = 1,
                             Personaje = "Neo"
+                        });
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Persona", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Personas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Felipe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Claudia"
                         });
                 });
 
@@ -690,6 +774,25 @@ namespace EFCorePeliculas.Migrations
                         .HasForeignKey("EFCorePeliculas.Entidades.CineOferta", "CineId");
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Mensaje", b =>
+                {
+                    b.HasOne("EFCorePeliculas.Entidades.Persona", "Emisor")
+                        .WithMany("MensajesEnviados")
+                        .HasForeignKey("EmisorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EFCorePeliculas.Entidades.Persona", "Receptor")
+                        .WithMany("MensajesRecividos")
+                        .HasForeignKey("ReceptorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Emisor");
+
+                    b.Navigation("Receptor");
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.PeliculaActor", b =>
                 {
                     b.HasOne("EFCorePeliculas.Entidades.Actor", "Actor")
@@ -765,6 +868,13 @@ namespace EFCorePeliculas.Migrations
             modelBuilder.Entity("EFCorePeliculas.Entidades.Pelicula", b =>
                 {
                     b.Navigation("PeliculasActores");
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Persona", b =>
+                {
+                    b.Navigation("MensajesEnviados");
+
+                    b.Navigation("MensajesRecividos");
                 });
 #pragma warning restore 612, 618
         }

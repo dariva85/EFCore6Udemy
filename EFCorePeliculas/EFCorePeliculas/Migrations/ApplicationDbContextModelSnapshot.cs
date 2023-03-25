@@ -427,7 +427,7 @@ namespace EFCorePeliculas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CineId")
+                    b.Property<int>("ElCine")
                         .HasColumnType("int");
 
                     b.Property<string>("Moneda")
@@ -446,7 +446,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CineId");
+                    b.HasIndex("ElCine");
 
                     b.ToTable("SalasDeCine");
 
@@ -454,7 +454,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 5,
-                            CineId = 3,
+                            ElCine = 3,
                             Moneda = "",
                             Precio = 250m,
                             TipoSalaDeCine = "DosDimensiones"
@@ -462,7 +462,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 6,
-                            CineId = 3,
+                            ElCine = 3,
                             Moneda = "",
                             Precio = 330m,
                             TipoSalaDeCine = "TresDimensiones"
@@ -470,7 +470,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 7,
-                            CineId = 3,
+                            ElCine = 3,
                             Moneda = "",
                             Precio = 450m,
                             TipoSalaDeCine = "CXC"
@@ -478,7 +478,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 8,
-                            CineId = 4,
+                            ElCine = 4,
                             Moneda = "",
                             Precio = 250m,
                             TipoSalaDeCine = "DosDimensiones"
@@ -486,7 +486,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 1,
-                            CineId = 1,
+                            ElCine = 1,
                             Moneda = "",
                             Precio = 220m,
                             TipoSalaDeCine = "DosDimensiones"
@@ -494,7 +494,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 2,
-                            CineId = 1,
+                            ElCine = 1,
                             Moneda = "",
                             Precio = 320m,
                             TipoSalaDeCine = "TresDimensiones"
@@ -502,7 +502,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 3,
-                            CineId = 2,
+                            ElCine = 2,
                             Moneda = "",
                             Precio = 200m,
                             TipoSalaDeCine = "DosDimensiones"
@@ -510,7 +510,7 @@ namespace EFCorePeliculas.Migrations
                         new
                         {
                             Id = 4,
-                            CineId = 2,
+                            ElCine = 2,
                             Moneda = "",
                             Precio = 290m,
                             TipoSalaDeCine = "TresDimensiones"
@@ -713,7 +713,7 @@ namespace EFCorePeliculas.Migrations
                 {
                     b.HasOne("EFCorePeliculas.Entidades.Cine", "Cine")
                         .WithMany("SalasDeCine")
-                        .HasForeignKey("CineId")
+                        .HasForeignKey("ElCine")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

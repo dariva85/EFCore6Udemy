@@ -81,7 +81,7 @@ namespace EFCorePeliculas.Controllers
                 Titulo = p.Titulo,
                 Generos = p.Generos.OrderByDescending(g => g.Nombre).Select(g => g.Nombre).ToList(),
                 CantidadActores = p.PeliculasActores.Count(),
-                Cines = p.SalasDeCine.Select(s => s.CineId).Distinct().Count()
+                Cines = p.SalasDeCine.Select(s => s.ElCine).Distinct().Count()
             }).FirstOrDefaultAsync(p => p.Id == id);
 
             if (pelicula is null)

@@ -62,7 +62,7 @@ namespace EFCorePeliculas.Controllers
 
             var cine = new Cine()
             {
-                Nombre = "Mi Cine con Monedas para borrar",
+                Nombre = "Mi Cine con Monedas para probar Foreign key",
                 Ubicacion = ubicacionCine,
                 CineOferta = new CineOferta()
                 {

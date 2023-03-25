@@ -1,10 +1,13 @@
-﻿namespace EFCorePeliculas.Entidades
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EFCorePeliculas.Entidades
 {
     public class SalaDeCine
     {
         public int Id { get; set; }
         public decimal Precio { get; set; }
-        public  int CineId { get; set; }
+        public  int ElCine { get; set; }
+        [ForeignKey(nameof(ElCine))]
         public Cine Cine { get; set; }
         public TipoSalaDeCine TipoSalaDeCine { get; set; }
         public HashSet<Pelicula> Peliculas { get; set; }

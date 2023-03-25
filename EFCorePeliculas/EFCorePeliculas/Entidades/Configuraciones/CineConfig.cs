@@ -19,7 +19,8 @@ namespace EFCorePeliculas.Entidades.Configuraciones
 
             builder.HasMany(c => c.SalasDeCine)
                 .WithOne(sc => sc.Cine)
-                .HasForeignKey(sci => sci.ElCine);
+                .HasForeignKey(sci => sci.ElCine)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

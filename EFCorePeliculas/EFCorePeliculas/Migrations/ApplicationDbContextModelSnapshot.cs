@@ -817,7 +817,7 @@ namespace EFCorePeliculas.Migrations
                     b.HasOne("EFCorePeliculas.Entidades.Cine", "Cine")
                         .WithMany("SalasDeCine")
                         .HasForeignKey("ElCine")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Cine");

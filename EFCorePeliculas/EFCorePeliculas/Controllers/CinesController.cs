@@ -105,13 +105,13 @@ namespace EFCorePeliculas.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var cine = await context.Cines.Include(c => c.CineOferta).FirstOrDefaultAsync(X => X.Id == id);
+            var cine = await context.Cines.Include(c => c.SalasDeCine).Include(c => c.CineOferta).FirstOrDefaultAsync(X => X.Id == id);
 
             if (cine is null)
             {
                 return NotFound();
             }
-
+            context.RemoveRange(cine.SalasDeCine);
             context.Remove(cine);
             await context.SaveChangesAsync();
             

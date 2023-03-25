@@ -11,6 +11,14 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             builder.HasKey(prop => new { prop.PeliculaId, prop.ActorId });
             builder.Property(prop => prop.Personaje)
                 .HasMaxLength(150);
+
+            builder.HasOne(pa => pa.Pelicula)
+                .WithMany(p => p.PeliculasActores)
+                .HasForeignKey(pa => pa.PeliculaId);
+
+            builder.HasOne(pa => pa.Actor)
+                .WithMany(a => a.PeliculasActores)
+                .HasForeignKey(pa => pa.ActorId);
         }
     }
 }

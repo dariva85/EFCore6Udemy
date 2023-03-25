@@ -160,7 +160,7 @@ namespace EFCorePeliculas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CineId")
+                    b.Property<int?>("CineId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaFin")
@@ -176,7 +176,8 @@ namespace EFCorePeliculas.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CineId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CineId] IS NOT NULL");
 
                     b.ToTable("CinesOfertas");
 
@@ -185,16 +186,16 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 2,
                             CineId = 4,
-                            FechaFin = new DateTime(2023, 3, 29, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 3, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 25, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 15m
                         },
                         new
                         {
                             Id = 1,
                             CineId = 1,
-                            FechaFin = new DateTime(2023, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 25, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 10m
                         });
                 });
@@ -686,9 +687,7 @@ namespace EFCorePeliculas.Migrations
                 {
                     b.HasOne("EFCorePeliculas.Entidades.Cine", null)
                         .WithOne("CineOferta")
-                        .HasForeignKey("EFCorePeliculas.Entidades.CineOferta", "CineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EFCorePeliculas.Entidades.CineOferta", "CineId");
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.PeliculaActor", b =>

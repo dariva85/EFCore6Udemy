@@ -62,7 +62,7 @@ namespace EFCorePeliculas.Controllers
 
             var cine = new Cine()
             {
-                Nombre = "Mi Cine con Monedas",
+                Nombre = "Mi Cine con Monedas para borrar",
                 Ubicacion = ubicacionCine,
                 CineOferta = new CineOferta()
                 {
@@ -99,6 +99,22 @@ namespace EFCorePeliculas.Controllers
             var cine = mapper.Map<Cine>(cineCreacionDTO);
             context.Add(cine);
             await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var cine = await context.Cines.Include(c => c.CineOferta).FirstOrDefaultAsync(X => X.Id == id);
+
+            if (cine is null)
+            {
+                return NotFound();
+            }
+
+            context.Remove(cine);
+            await context.SaveChangesAsync();
+            
             return Ok();
         }
     }

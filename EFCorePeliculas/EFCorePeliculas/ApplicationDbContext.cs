@@ -65,5 +65,6 @@ namespace EFCorePeliculas
         public DbSet<CineSinUbicacion> CinesSinUbicacion { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Mensaje> Mensajes { get; set; }
+        public DbSet<CineDetalle> CineDetalle { get; set; }
     }
 }

@@ -62,8 +62,14 @@ namespace EFCorePeliculas.Controllers
 
             var cine = new Cine()
             {
-                Nombre = "Mi Cine con Monedas para probar Foreign key",
+                Nombre = "Mi Cine con Monedas para probar table Split",
                 Ubicacion = ubicacionCine,
+                CineDetalle = new CineDetalle()
+                {
+                    Historia = "Historia...",
+                    Mision = "Mision...",
+                    Vision = "Vision..."
+                },
                 CineOferta = new CineOferta()
                 {
                     PorcentajeDescuento = 5,
@@ -114,8 +120,23 @@ namespace EFCorePeliculas.Controllers
             context.RemoveRange(cine.SalasDeCine);
             context.Remove(cine);
             await context.SaveChangesAsync();
-            
+
             return Ok();
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            var cine = await context.Cines.Include(c=>c.CineDetalle).FirstOrDefaultAsync(c=>c.Id == id);
+
+            if(cine is null)
+            {
+                return NotFound();
+            }
+
+            cine.Ubicacion = null;
+
+            return Ok(cine);
         }
     }
 }

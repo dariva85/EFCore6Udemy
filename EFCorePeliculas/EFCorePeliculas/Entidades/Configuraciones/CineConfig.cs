@@ -21,6 +21,11 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 .WithOne(sc => sc.Cine)
                 .HasForeignKey(sci => sci.ElCine)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.CineDetalle)
+                .WithOne(cd => cd.Cine)
+                .HasForeignKey<CineDetalle>(cd => cd.Id);
+
         }
     }
 }

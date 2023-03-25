@@ -354,6 +354,33 @@ namespace EFCorePeliculas.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Pago", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("FechaTransaccion")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("Monto")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TipoPago")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pagos");
+
+                    b.HasDiscriminator<int>("TipoPago");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.Pelicula", b =>
                 {
                     b.Property<int>("Id")
@@ -787,6 +814,65 @@ namespace EFCorePeliculas.Migrations
                         {
                             PeliculasId = 5,
                             SalasDeCineId = 7
+                        });
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.PagoPaypal", b =>
+                {
+                    b.HasBaseType("EFCorePeliculas.Entidades.Pago");
+
+                    b.Property<string>("CorreoElectronico")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasDiscriminator().HasValue(1);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            FechaTransaccion = new DateTime(2022, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Monto = 157m,
+                            TipoPago = 1,
+                            CorreoElectronico = "felipe@hotmail.com"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FechaTransaccion = new DateTime(2022, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Monto = 9.99m,
+                            TipoPago = 1,
+                            CorreoElectronico = "claudia@hotmail.com"
+                        });
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.PagoTarjeta", b =>
+                {
+                    b.HasBaseType("EFCorePeliculas.Entidades.Pago");
+
+                    b.Property<string>("Ultimos4Digitos")
+                        .IsRequired()
+                        .HasColumnType("char(4)");
+
+                    b.HasDiscriminator().HasValue(2);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FechaTransaccion = new DateTime(2022, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Monto = 500m,
+                            TipoPago = 2,
+                            Ultimos4Digitos = "0123"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FechaTransaccion = new DateTime(2022, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Monto = 120m,
+                            TipoPago = 2,
+                            Ultimos4Digitos = "1234"
                         });
                 });
 

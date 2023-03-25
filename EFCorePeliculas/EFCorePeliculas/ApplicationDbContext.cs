@@ -66,5 +66,6 @@ namespace EFCorePeliculas
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Mensaje> Mensajes { get; set; }
         public DbSet<CineDetalle> CineDetalle { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
     }
 }

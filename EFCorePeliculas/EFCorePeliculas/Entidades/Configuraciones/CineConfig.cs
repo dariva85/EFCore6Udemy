@@ -11,6 +11,11 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             builder.Property(prop => prop.Nombre)
                 .HasMaxLength(150)
                 .IsRequired();
+
+            //En nuestro caso no hace falta ya que usamos los nombres según convención.
+            builder.HasOne(c => c.CineOferta)
+                .WithOne()
+                .HasForeignKey<CineOferta>(co => co.CineId);
         }
     }
 }

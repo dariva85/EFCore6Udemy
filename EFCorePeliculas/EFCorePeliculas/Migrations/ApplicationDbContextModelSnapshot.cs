@@ -209,16 +209,16 @@ namespace EFCorePeliculas.Migrations
                         {
                             Id = 2,
                             CineId = 4,
-                            FechaFin = new DateTime(2023, 3, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 26, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 15m
                         },
                         new
                         {
                             Id = 1,
                             CineId = 1,
-                            FechaFin = new DateTime(2023, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2023, 3, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2023, 4, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2023, 3, 26, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 10m
                         });
                 });
@@ -553,6 +553,28 @@ namespace EFCorePeliculas.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Producto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Precio")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Productos");
+
+                    b.UseTptMappingStrategy();
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.SalaDeCine", b =>
                 {
                     b.Property<int>("Id")
@@ -876,6 +898,60 @@ namespace EFCorePeliculas.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Merchandising", b =>
+                {
+                    b.HasBaseType("EFCorePeliculas.Entidades.Producto");
+
+                    b.Property<bool>("DisponibleEnInventario")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EsColeccionable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EsRopa")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Peso")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Volumen")
+                        .HasColumnType("float");
+
+                    b.ToTable("Merchandising", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "T-Shirt One Piece",
+                            Precio = 11m,
+                            DisponibleEnInventario = true,
+                            EsColeccionable = false,
+                            EsRopa = true,
+                            Peso = 1.0,
+                            Volumen = 1.0
+                        });
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.PeliculaAlquilable", b =>
+                {
+                    b.HasBaseType("EFCorePeliculas.Entidades.Producto");
+
+                    b.Property<int>("PeliculaId")
+                        .HasColumnType("int");
+
+                    b.ToTable("PeliculasAlquilables", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Spider-Man",
+                            Precio = 5.99m,
+                            PeliculaId = 1
+                        });
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.CineDetalle", b =>
                 {
                     b.HasOne("EFCorePeliculas.Entidades.Cine", "Cine")
@@ -969,6 +1045,24 @@ namespace EFCorePeliculas.Migrations
                     b.HasOne("EFCorePeliculas.Entidades.SalaDeCine", null)
                         .WithMany()
                         .HasForeignKey("SalasDeCineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Merchandising", b =>
+                {
+                    b.HasOne("EFCorePeliculas.Entidades.Producto", null)
+                        .WithOne()
+                        .HasForeignKey("EFCorePeliculas.Entidades.Merchandising", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.PeliculaAlquilable", b =>
+                {
+                    b.HasOne("EFCorePeliculas.Entidades.Producto", null)
+                        .WithOne()
+                        .HasForeignKey("EFCorePeliculas.Entidades.PeliculaAlquilable", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

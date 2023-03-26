@@ -52,6 +52,30 @@ namespace EFCorePeliculas
                     }
                 }
             }
+            modelBuilder.Entity<PeliculaAlquilable>().ToTable("PeliculasAlquilables");
+            modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
+
+            var pelicula1 = new PeliculaAlquilable()
+            {
+                Id = 1,
+                Nombre = "Spider-Man",
+                PeliculaId = 1,
+                Precio = 5.99m
+            };
+
+            var merch1 = new Merchandising()
+            {
+                Id = 2,
+                DisponibleEnInventario = true,
+                EsRopa = true,
+                Nombre = "T-Shirt One Piece",
+                Peso = 1,
+                Volumen = 1,
+                Precio = 11
+            };
+
+            modelBuilder.Entity<PeliculaAlquilable>().HasData(pelicula1);
+            modelBuilder.Entity<Merchandising>().HasData(merch1);
 
         }
         public DbSet<Genero> Generos { get; set; }
@@ -67,5 +91,6 @@ namespace EFCorePeliculas
         public DbSet<Mensaje> Mensajes { get; set; }
         public DbSet<CineDetalle> CineDetalle { get; set; }
         public DbSet<Pago> Pagos { get; set; }
+        public DbSet<Producto> Productos { get; set; }
     }
 }

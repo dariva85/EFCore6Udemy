@@ -87,6 +87,14 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
+        [HttpPut("ActualizarGenero")]
+        public async Task<ActionResult> Update(Genero genero)
+        {
+            context.Update(genero); ;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {

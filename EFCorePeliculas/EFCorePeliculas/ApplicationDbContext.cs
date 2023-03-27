@@ -2,6 +2,7 @@
 using EFCorePeliculas.Entidades.Configuraciones;
 using EFCorePeliculas.Entidades.Seeding;
 using EFCorePeliculas.Entidades.SinLlave;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -78,6 +79,30 @@ namespace EFCorePeliculas
             modelBuilder.Entity<Merchandising>().HasData(merch1);
 
         }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ProcesarSalvado();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ProcesarSalvado()
+        {
+            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added && e.Entity is EntidadAuditable))
+            {
+                var entidad = item.Entity as EntidadAuditable;
+                entidad.UsuarioModificacion = "Felipe";
+                entidad.UsuarioCreacion = "Felipe";
+            }
+
+            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is EntidadAuditable))
+            {
+                var entidad = item.Entity as EntidadAuditable;
+                entidad.UsuarioModificacion = "Felipe - actualizado";
+                item.Property(nameof(entidad.UsuarioCreacion)).IsModified = false; 
+            }
+        }
+
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Actor> Actores { get; set; }
         public DbSet<Cine> Cines { get; set; }

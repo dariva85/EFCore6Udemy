@@ -6,7 +6,7 @@ namespace EFCorePeliculas.Entidades
 {
     //[Table("TablaGeneros", Schema ="peliculas")]
     //[Index(nameof(Nombre), IsUnique = true)]
-    public class Genero
+    public class Genero : EntidadAuditable
     {
         //[Key]
         public int Identificador { get; set; }

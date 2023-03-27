@@ -75,7 +75,7 @@ namespace EFCorePeliculas.Controllers
 
             await context.Database.ExecuteSqlInterpolatedAsync($@"
                 INSERT INTO Generos (Nombre)
-                VALLUES({genero.Nombre})");
+                VALUES({genero.Nombre})");
 
             return Ok();
         }

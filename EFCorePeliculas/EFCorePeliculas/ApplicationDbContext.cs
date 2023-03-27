@@ -13,9 +13,18 @@ namespace EFCorePeliculas
     {
         private readonly IServicioUsuario servicioUsuario;
 
-        public ApplicationDbContext(DbContextOptions options, IServicioUsuario servicioUsuario) : base(options)
+        public ApplicationDbContext(DbContextOptions options, IServicioUsuario servicioUsuario, IEventosDbContext eventosDbContext) : base(options)
         {
             this.servicioUsuario = servicioUsuario;
+
+            if(eventosDbContext is not null )
+            {
+                //ChangeTracker.StateChanged += eventosDbContext.ManejarStateChanged;
+                //ChangeTracker.Tracked += eventosDbContext.ManejarTracked;
+                SavingChanges += eventosDbContext.ManejarSavingChanges;
+                SavedChanges += eventosDbContext.ManejarSavedChanges;
+                SaveChangesFailed += eventosDbContext.ManejarSaveChangeFailed;
+            }
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

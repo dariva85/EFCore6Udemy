@@ -70,8 +70,12 @@ namespace EFCorePeliculas.Controllers
                 return BadRequest("Ya existe un genero con el nombre: " + genero.Nombre);
             }
 
-            context.Add(genero);
-            await context.SaveChangesAsync();
+            //context.Add(genero);
+            //await context.SaveChangesAsync();
+
+            await context.Database.ExecuteSqlInterpolatedAsync($@"
+                INSERT INTO Generos (Nombre)
+                VALLUES({genero.Nombre})");
 
             return Ok();
         }

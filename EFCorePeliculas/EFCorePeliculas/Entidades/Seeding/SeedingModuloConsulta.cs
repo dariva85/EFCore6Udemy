@@ -34,7 +34,7 @@ namespace EFCorePeliculas.Entidades.Seeding
             var megacentro = new Cine() { Id = 3, Nombre = "Megacentro", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-69.856309, 18.506662)) };
             var acropolis = new Cine() { Id = 4, Nombre = "Acropolis", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-69.939248, 18.469649)) };
 
-            var agoraCineOferta = new CineOferta { Id = 1, CineId = agora.Id, FechaInicio = DateTime.Today, FechaFin = DateTime.Today.AddDays(7), PorcentajeDescuento = 10 };
+            var agoraCineOferta = new CineOferta { Id = 1, CineId = agora.Id, FechaInicio = new DateTime(2023, 03, 26), FechaFin = new DateTime(2023, 04, 2), PorcentajeDescuento = 10 };
 
             var salaDeCine2DAgora = new SalaDeCine()
             {
@@ -97,7 +97,7 @@ namespace EFCorePeliculas.Entidades.Seeding
                 TipoSalaDeCine = TipoSalaDeCine.DosDimensiones
             };
 
-            var acropolisCineOferta = new CineOferta { Id = 2, CineId = acropolis.Id, FechaInicio = DateTime.Today, FechaFin = DateTime.Today.AddDays(5), PorcentajeDescuento = 15 };
+            var acropolisCineOferta = new CineOferta { Id = 2, CineId = acropolis.Id, FechaInicio = new DateTime(2023, 03, 26), FechaFin = new DateTime(2023, 03, 31), PorcentajeDescuento = 15 };
 
             modelBuilder.Entity<Cine>().HasData(acropolis, sambil, megacentro, agora);
             modelBuilder.Entity<CineOferta>().HasData(acropolisCineOferta, agoraCineOferta);

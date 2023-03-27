@@ -1,5 +1,6 @@
 ﻿using EFCorePeliculas.Entidades;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCorePeliculas.Controllers
@@ -26,6 +27,46 @@ namespace EFCorePeliculas.Controllers
             await context.SaveChangesAsync();
             return await context.Generos.OrderByDescending(g => EF.Property<DateTime>(g, "FechaCreacion")).ToListAsync();
             //return await context.Generos.OrderBy(g => g.Nombre).ToListAsync();
+        }
+
+        [HttpGet("Procedimiento_almacenado/{id:int}")]
+        public async Task<ActionResult<Genero>> GetSP(int id)
+        {
+            var generos = context.Generos
+                .FromSqlInterpolated($"EXEC Generos_ObtenerPorId {id}")
+                .IgnoreQueryFilters()
+                .AsAsyncEnumerable();
+
+            await foreach (var genero in generos)
+            {
+                return genero;
+            }
+
+            return NotFound();
+            
+        }
+
+        [HttpPost("Procedimiento_almacenado")]
+        public async Task<ActionResult> PostSP(Genero genero)
+        {
+            var existeGenero = await context.Generos.AnyAsync(g => g.Nombre == genero.Nombre);
+
+            if(existeGenero)
+            {
+                return BadRequest("Ya existe un genero con ese nombre");
+            }
+
+            var outputid = new SqlParameter();
+
+            outputid.ParameterName = "@id";
+            outputid.Direction = System.Data.ParameterDirection.Output;
+            outputid.SqlDbType = System.Data.SqlDbType.Int;
+
+            await context.Database.ExecuteSqlRawAsync("EXEC Generos_Insertar @nombre = {0}, @id = {1} OUTPUT", genero.Nombre, outputid);
+
+            var id = (int)outputid.Value;
+            return Ok(id);
+
         }
 
 

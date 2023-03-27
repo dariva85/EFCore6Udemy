@@ -1,4 +1,5 @@
 using EFCorePeliculas;
+using EFCorePeliculas.Servicios;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         //options.UseLazyLoadingProxies();
     });
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
 
 var app = builder.Build();
 

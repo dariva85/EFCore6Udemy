@@ -2,6 +2,7 @@
 using EFCorePeliculas.Entidades.Configuraciones;
 using EFCorePeliculas.Entidades.Seeding;
 using EFCorePeliculas.Entidades.SinLlave;
+using EFCorePeliculas.Servicios;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -10,9 +11,11 @@ namespace EFCorePeliculas
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        {
+        private readonly IServicioUsuario servicioUsuario;
 
+        public ApplicationDbContext(DbContextOptions options, IServicioUsuario servicioUsuario) : base(options)
+        {
+            this.servicioUsuario = servicioUsuario;
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -91,14 +94,14 @@ namespace EFCorePeliculas
             foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added && e.Entity is EntidadAuditable))
             {
                 var entidad = item.Entity as EntidadAuditable;
-                entidad.UsuarioModificacion = "Felipe";
-                entidad.UsuarioCreacion = "Felipe";
+                entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
+                entidad.UsuarioCreacion = servicioUsuario.ObtenerUsuarioId();
             }
 
             foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is EntidadAuditable))
             {
                 var entidad = item.Entity as EntidadAuditable;
-                entidad.UsuarioModificacion = "Felipe - actualizado";
+                entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
                 item.Property(nameof(entidad.UsuarioCreacion)).IsModified = false; 
             }
         }

@@ -1,16 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
+using System.Collections.ObjectModel;
 
 namespace EFCorePeliculas.Entidades
 {
-    public class Cine
+    public class Cine:Notificacion
     {
         public int Id { get; set; }
-        public string Nombre { get; set; }
-        //[Precision(precision:9, scale:2)]
-        public Point Ubicacion { get; set; }
-        public CineOferta CineOferta { get; set; }
-        public HashSet<SalaDeCine> SalasDeCine { get; set; }
-        public CineDetalle CineDetalle { get; set; }
+        private string _nombre;
+        public string Nombre { get => _nombre; set => Set(value, ref _nombre); }
+        private Point _ubicacion;
+        public Point Ubicacion { get => _ubicacion; set => Set(value, ref _ubicacion); }
+        private CineOferta _cineOferta;
+        public CineOferta CineOferta { get => _cineOferta; set => Set(value, ref _cineOferta); }
+        public ObservableCollection<SalaDeCine> SalasDeCine { get; set; }
+        private CineDetalle _cineDetalle;
+        public CineDetalle CineDetalle { get => _cineDetalle; set => Set(value, ref _cineDetalle); }
     }
 }

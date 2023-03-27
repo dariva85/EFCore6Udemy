@@ -6,6 +6,7 @@ using EFCorePeliculas.Entidades.SinLlave;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
+using System.Collections.ObjectModel;
 
 namespace EFCorePeliculas.Controllers
 {
@@ -76,7 +77,7 @@ namespace EFCorePeliculas.Controllers
                     FechaInicio = DateTime.Today,
                     FechaFin = DateTime.Today.AddDays(7)
                 },
-                SalasDeCine = new HashSet<SalaDeCine>()
+                SalasDeCine = new ObservableCollection<SalaDeCine>()
                 {
                     new SalaDeCine()
                     {

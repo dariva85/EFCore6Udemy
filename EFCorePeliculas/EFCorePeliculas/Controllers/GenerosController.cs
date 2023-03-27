@@ -18,9 +18,11 @@ namespace EFCorePeliculas.Controllers
         [HttpGet]
         public async Task<IEnumerable<Genero>> Get()
         {
-            context.Logs.Add(new Log { 
+            context.Logs.Add(new Log
+            {
                 Id = Guid.NewGuid(),
-                Mensaje = "Ejecuntando el método GenerosController.Get" });
+                Mensaje = "Ejecuntando el método GenerosController.Get"
+            });
             await context.SaveChangesAsync();
             return await context.Generos.OrderByDescending(g => EF.Property<DateTime>(g, "FechaCreacion")).ToListAsync();
             //return await context.Generos.OrderBy(g => g.Nombre).ToListAsync();
@@ -30,7 +32,18 @@ namespace EFCorePeliculas.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genero>> Primer(int id)
         {
-            var genero = await context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Identificador == id);
+            //var genero = await context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Identificador == id);
+
+            //var genero = await context.Generos
+            //                    .FromSqlRaw("SeLecT * FROM Generos WHERE Identificadior = {0}", id)
+            //                    .IgnoreQueryFilters()
+            //                    .FirstOrDefaultAsync();
+
+            var genero = await context.Generos
+                                .FromSqlInterpolated($"SeLecT * FROM Generos WHERE Identificadior = {id}")
+                                .IgnoreQueryFilters()
+                                .FirstOrDefaultAsync();
+
 
             if (genero == null)
             {
@@ -51,15 +64,15 @@ namespace EFCorePeliculas.Controllers
         public async Task<ActionResult> Post(Genero genero)
         {
             var existeGenero = await context.Generos.AnyAsync(g => g.Nombre == genero.Nombre);
-            
-            if(existeGenero)
+
+            if (existeGenero)
             {
                 return BadRequest("Ya existe un genero con el nombre: " + genero.Nombre);
             }
-            
+
             context.Add(genero);
             await context.SaveChangesAsync();
-            
+
             return Ok();
         }
 

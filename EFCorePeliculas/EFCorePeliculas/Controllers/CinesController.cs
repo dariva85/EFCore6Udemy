@@ -127,7 +127,12 @@ namespace EFCorePeliculas.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult> Get(int id)
         {
-            var cine = await context.Cines.Include(c=>c.CineDetalle).FirstOrDefaultAsync(c=>c.Id == id);
+            //var cine = await context.Cines.Include(c=>c.CineDetalle).FirstOrDefaultAsync(c=>c.Id == id);
+
+            var cine = await context.Cines
+                .FromSqlInterpolated($"Select * FROM Cines WHERE Id = {id}")
+                .Include(c => c.CineDetalle)
+                .FirstOrDefaultAsync();
 
             if(cine is null)
             {

@@ -223,6 +223,47 @@ namespace EFCorePeliculas.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.Factura", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Facturas");
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.FacturaDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FacturaId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Precio")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Producto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacturaId");
+
+                    b.ToTable("FacturaDetalles");
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.Genero", b =>
                 {
                     b.Property<int>("Identificador")
@@ -976,6 +1017,15 @@ namespace EFCorePeliculas.Migrations
                     b.HasOne("EFCorePeliculas.Entidades.Cine", null)
                         .WithOne("CineOferta")
                         .HasForeignKey("EFCorePeliculas.Entidades.CineOferta", "CineId");
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.FacturaDetalle", b =>
+                {
+                    b.HasOne("EFCorePeliculas.Entidades.Factura", null)
+                        .WithMany()
+                        .HasForeignKey("FacturaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Mensaje", b =>

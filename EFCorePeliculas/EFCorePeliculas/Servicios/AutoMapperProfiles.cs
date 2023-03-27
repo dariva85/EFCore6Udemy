@@ -31,6 +31,7 @@ namespace EFCorePeliculas.Servicios
             var GeometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
 
             CreateMap<CineCreacionDTO, Cine>()
+                .ForMember(ent=> ent.SalasDeCine, opciones => opciones.Ignore())
                 .ForMember(dto => dto.Ubicacion, ent => ent.MapFrom(campo => GeometryFactory.CreatePoint(new Coordinate(campo.Longitud, campo.Latitud))));
             CreateMap<SalaDeCineCreacionDTO, SalaDeCine>();
             CreateMap<CineOfertaCreacionDTO, CineOferta>();

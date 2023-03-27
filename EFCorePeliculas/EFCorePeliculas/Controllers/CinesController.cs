@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using EFCorePeliculas.Controllers.DTOs;
 using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Entidades.SinLlave;
+using EFCorePeliculas.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
@@ -15,12 +16,14 @@ namespace EFCorePeliculas.Controllers
     public class CinesController : ControllerBase
     {
         private readonly IMapper mapper;
+        private readonly IActualizadorObservableCollection actualizadorObservableCollection;
         private readonly ApplicationDbContext context;
 
-        public CinesController(ApplicationDbContext context, IMapper mapper)
+        public CinesController(ApplicationDbContext context, IMapper mapper, IActualizadorObservableCollection actualizadorObservableCollection)
         {
             this.context = context;
             this.mapper = mapper;
+            this.actualizadorObservableCollection = actualizadorObservableCollection;
         }
 
         [HttpGet]
@@ -108,6 +111,26 @@ namespace EFCorePeliculas.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
+
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(CineCreacionDTO cineCreacionDTO, int id)
+        {
+            var cineDB = await context.Cines.AsTracking().Include(c => c.SalasDeCine).Include(c => c.CineOferta).FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cineDB is not null)
+            {
+                return NotFound();
+            }
+
+            cineDB = mapper.Map(cineCreacionDTO, cineDB);
+            actualizadorObservableCollection.Actualizar(cineDB.SalasDeCine, cineCreacionDTO.SalasDeCine);
+
+
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)

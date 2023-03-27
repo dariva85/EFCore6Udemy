@@ -21,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
 builder.Services.AddScoped<IEventosDbContext, EventosDbContext>();
+builder.Services.AddScoped<IActualizadorObservableCollection, ActualizadorObservableCollection>();
 
 var app = builder.Build();
 

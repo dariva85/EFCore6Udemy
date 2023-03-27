@@ -2,7 +2,7 @@
 
 namespace EFCorePeliculas.Entidades
 {
-    public class SalaDeCine
+    public class SalaDeCine: IId
     {
         public int Id { get; set; }
         public decimal Precio { get; set; }

@@ -1,5 +1,6 @@
 ﻿using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Entidades.Configuraciones;
+using EFCorePeliculas.Entidades.Funciones;
 using EFCorePeliculas.Entidades.Seeding;
 using EFCorePeliculas.Entidades.SinLlave;
 using EFCorePeliculas.Servicios;
@@ -49,6 +50,9 @@ namespace EFCorePeliculas
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             SeedingModuloConsulta.Seed(modelBuilder);
             SeedingPersonaMensaje.Seed(modelBuilder);
+            SeedingFacturas.Seed(modelBuilder);
+
+            Escalares.RegistrarFunciones(modelBuilder);
 
             modelBuilder.Entity<CineSinUbicacion>().HasNoKey().ToSqlQuery("Select Id, Nombre From Cines").ToView(null);
 
@@ -114,7 +118,16 @@ namespace EFCorePeliculas
                 item.Property(nameof(entidad.UsuarioCreacion)).IsModified = false; 
             }
         }
-
+        [DbFunction(Name = "FacturaDetalleSuma")]
+        public int FacturaDetalleSuma2(int facturaId)
+        {
+            return 0;
+        }
+        [DbFunction]
+        public decimal FacturaDetallePromedio(int facturaId)
+        {
+            return 0;
+        }
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Actor> Actores { get; set; }
         public DbSet<Cine> Cines { get; set; }

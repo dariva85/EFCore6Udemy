@@ -237,6 +237,28 @@ namespace EFCorePeliculas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Facturas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            FechaCreacion = new DateTime(2022, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FechaCreacion = new DateTime(2022, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FechaCreacion = new DateTime(2022, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FechaCreacion = new DateTime(2022, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.FacturaDetalle", b =>
@@ -262,6 +284,92 @@ namespace EFCorePeliculas.Migrations
                     b.HasIndex("FacturaId");
 
                     b.ToTable("FacturaDetalles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            FacturaId = 2,
+                            Precio = 350.99m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FacturaId = 2,
+                            Precio = 10m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FacturaId = 2,
+                            Precio = 45.50m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FacturaId = 3,
+                            Precio = 17.99m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FacturaId = 3,
+                            Precio = 14m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FacturaId = 3,
+                            Precio = 45m
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FacturaId = 3,
+                            Precio = 100m
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FacturaId = 4,
+                            Precio = 371m
+                        },
+                        new
+                        {
+                            Id = 11,
+                            FacturaId = 4,
+                            Precio = 114.99m
+                        },
+                        new
+                        {
+                            Id = 12,
+                            FacturaId = 4,
+                            Precio = 425m
+                        },
+                        new
+                        {
+                            Id = 13,
+                            FacturaId = 4,
+                            Precio = 1000m
+                        },
+                        new
+                        {
+                            Id = 14,
+                            FacturaId = 4,
+                            Precio = 5m
+                        },
+                        new
+                        {
+                            Id = 15,
+                            FacturaId = 4,
+                            Precio = 2.99m
+                        },
+                        new
+                        {
+                            Id = 16,
+                            FacturaId = 5,
+                            Precio = 50m
+                        });
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Genero", b =>
@@ -1071,7 +1179,7 @@ namespace EFCorePeliculas.Migrations
                     b.HasOne("EFCorePeliculas.Entidades.Cine", "Cine")
                         .WithMany("SalasDeCine")
                         .HasForeignKey("ElCine")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cine");

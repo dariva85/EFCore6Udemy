@@ -118,7 +118,7 @@ namespace EFCorePeliculas.Controllers
         {
             var cineDB = await context.Cines.AsTracking().Include(c => c.SalasDeCine).Include(c => c.CineOferta).FirstOrDefaultAsync(c => c.Id == id);
 
-            if (cineDB is not null)
+            if (cineDB is null)
             {
                 return NotFound();
             }
